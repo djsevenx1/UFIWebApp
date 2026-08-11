@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 主应用主题 (亮色模式) -->
+    <style name="Theme.UFIWebApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+        <item name="android:colorBackground">@color/dark_background</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorOnError">@color/colorOnError</item>
+        <!-- 系统栏颜色直接在主题设置，避免 enableEdgeToEdge 导致闪黑 -->
+        <item name="android:statusBarColor">@color/dark_background</item>
+        <item name="android:navigationBarColor">@color/dark_background</item>
+        <item name="android:windowBackground">@color/dark_background</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
+    </style>
+
+    <!-- Splash Screen 主题 (启动画面) -->
+    <style name="Theme.UFIWebApp.Splash" parent="Theme.SplashScreen">
+        <!-- Splash 背景色与网页背景一致，避免启动闪黑 -->
+        <item name="windowSplashScreenBackground">@color/dark_background</item>
+        <!-- Splash 图标 (使用 launcher 前景图标) -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <!-- Splash 结束后切换到主主题 -->
+        <item name="postSplashScreenTheme">@style/Theme.UFIWebApp</item>
+    </style>
+
+</resources>
