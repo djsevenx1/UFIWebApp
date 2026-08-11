@@ -15,9 +15,6 @@ import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.ufi.webapp.network.TokenManager
 import kotlinx.coroutines.runBlocking
@@ -49,8 +46,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 手动开启 edge-to-edge 布局（不用 enableEdgeToEdge 避免系统栏被重置为透明）
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        // 不启用 edge-to-edge：系统栏使用主题色 (#1A1A1A)，WebView 在系统栏下方正常显示
+        // 避免系统栏和 WebView 之间出现颜色不一致的间隙
 
         // 同步读写 serverUrl：避免异步延迟导致黑屏
         val effectiveUrl = runBlocking {
@@ -268,12 +265,9 @@ class MainActivity : ComponentActivity() {
         // 加载 Web 端
         webView.loadUrl(baseUrl)
 
-        // 应用 WindowInsets：状态栏高度作为顶部 padding，导航栏高度作为底部 padding
-        ViewCompat.setOnApplyWindowInsetsListener(rootContainer) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(0, systemBars.top, 0, systemBars.bottom)
-            insets
-        }
+        // 设置系统栏颜色为深色，与 WebView 背景统一
+        window.statusBarColor = Color.parseColor("#1A1A1A")
+        window.navigationBarColor = Color.parseColor("#1A1A1A")
 
         setContentView(rootContainer)
     }
