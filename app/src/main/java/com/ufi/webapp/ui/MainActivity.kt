@@ -52,17 +52,19 @@ class MainActivity : ComponentActivity() {
         // 手动开启 edge-to-edge 布局（不用 enableEdgeToEdge 避免系统栏被重置为透明）
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        // 同步读取 serverUrl，避免异步延迟导致黑屏
-        val serverUrl = runBlocking { tokenManager.getServerUrl() }
+        // 同步读写 serverUrl：避免异步延迟导致黑屏
+        val effectiveUrl = runBlocking {
+            val existing = tokenManager.getServerUrl()
+            if (!existing.isNullOrBlank()) {
+                existing
+            } else {
+                // 首次启动：写入默认 UFI-TOOLS 地址
+                tokenManager.saveServerUrl(defaultUrl)
+                defaultUrl
+            }
+        }
 
         // UFI-TOOLS 不需要 token：有 serverUrl 就直接进 WebView
-        val effectiveUrl = if (!serverUrl.isNullOrBlank()) {
-            serverUrl
-        } else {
-            // 首次启动：写入默认 UFI-TOOLS 地址并直接进
-            tokenManager.saveServerUrl(defaultUrl)
-            defaultUrl
-        }
 
         if (effectiveUrl.isNotBlank()) {
             showWebView(effectiveUrl, "")
