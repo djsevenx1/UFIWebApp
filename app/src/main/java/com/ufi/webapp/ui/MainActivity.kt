@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.ViewGroup
 import android.webkit.CookieManager
@@ -266,8 +267,13 @@ class MainActivity : ComponentActivity() {
         webView.loadUrl(baseUrl)
 
         // 设置系统栏颜色为深色，与 WebView 背景统一
+        // 注意：Android 12+ 默认会加半透明遮罩，必须关闭 contrast enforcement
         window.statusBarColor = Color.parseColor("#1A1A1A")
         window.navigationBarColor = Color.parseColor("#1A1A1A")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.isStatusBarContrastEnforced = false
+            window.isNavigationBarContrastEnforced = false
+        }
 
         setContentView(rootContainer)
     }

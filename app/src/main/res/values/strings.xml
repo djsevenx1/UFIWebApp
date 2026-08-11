@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">UFI Web</string>
+    <string name="app_name">UFI-Tools</string>
     <string name="settings_title">Settings</string>
     <string name="add_server_title">Add Server</string>
     <string name="edit_server_title">Edit Server</string>
